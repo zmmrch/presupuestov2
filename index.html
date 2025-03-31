@@ -258,13 +258,13 @@
       
       // Función para crear un bloque de sector
       function createSectorBlock() {
+        const currentSectorIndex = sectorCount;
         const sectorDiv = document.createElement("div");
         sectorDiv.classList.add("sector-block");
-        // Guardar el índice real del sector
-        sectorDiv.dataset.sectorIndex = sectorCount;
+        sectorDiv.dataset.sectorIndex = currentSectorIndex;
         
         const header = document.createElement("h3");
-        header.textContent = "Sector " + (sectorCount + 1);
+        header.textContent = "Sector " + (currentSectorIndex + 1);
         sectorDiv.appendChild(header);
         
         // Botón para eliminar sector
@@ -273,9 +273,9 @@
         removeSectorBtn.textContent = "Eliminar Sector";
         removeSectorBtn.classList.add("remove-btn");
         removeSectorBtn.addEventListener("click", function() {
-          sectorDiv.remove();
-          updateResumenTable();
-          calculateTotals();
+            sectorDiv.remove();
+            updateResumenTable();
+            calculateTotals();
         });
         sectorDiv.appendChild(removeSectorBtn);
         
@@ -285,7 +285,7 @@
         sectorDiv.appendChild(labelDesc);
         const inputDesc = document.createElement("input");
         inputDesc.type = "text";
-        inputDesc.name = `sector_${sectorCount}_descripcion`;
+        inputDesc.name = `sector_${currentSectorIndex}_descripcion`;
         inputDesc.required = true;
         sectorDiv.appendChild(inputDesc);
         
@@ -372,8 +372,9 @@
         addMedidaBtn.type = "button";
         addMedidaBtn.textContent = "Agregar Medida";
         addMedidaBtn.classList.add("btn");
+        // Usamos currentSectorIndex en lugar de sectorCount
         addMedidaBtn.addEventListener("click", function() {
-          medidasContainer.appendChild(createMedidaRow(sectorCount));
+            medidasContainer.appendChild(createMedidaRow(currentSectorIndex));
         });
         sectorDiv.appendChild(addMedidaBtn);
         
@@ -385,8 +386,9 @@
         addProductoBtn.type = "button";
         addProductoBtn.textContent = "Agregar Producto al Sector";
         addProductoBtn.classList.add("btn");
+        // Usamos currentSectorIndex aquí también
         addProductoBtn.addEventListener("click", function() {
-          productosContainer.appendChild(createSectorProductoRow(sectorCount));
+            productosContainer.appendChild(createSectorProductoRow(currentSectorIndex));
         });
         sectorDiv.appendChild(addProductoBtn);
         
